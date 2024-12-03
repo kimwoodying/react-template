@@ -19,6 +19,7 @@ function SignUpForm() {
     });
 
     const [nicknameAvailable, setNicknameAvailable] = useState(null); // 닉네임 중복 확인 결과
+    const [isNicknameConfirmed, setIsNicknameConfirmed] = useState(false); // 닉네임 확정 여부
 
     const minDate = "1950-01-01";
     const maxDate = "2024-12-31";
@@ -27,33 +28,29 @@ function SignUpForm() {
         const { name, value, type, checked, dataset } = e.target;
 
         if (name === "dob") {
-            // 날짜 유효성 검증
             if (value < minDate || value > maxDate) {
                 alert("올바른 날짜를 입력해주세요 (1950-01-01 ~ 2024-12-31)");
-                return; // 유효하지 않은 값은 무시
+                return;
             }
         }
 
         if (dataset.group) {
-            // favorite 그룹에 속한 체크박스 처리
             const group = dataset.group;
             setFormData((prevData) => ({
                 ...prevData,
                 favorite: {
                     ...prevData.favorite,
                     [group]: checked
-                        ? [...(prevData.favorite[group] || []), value] // 선택된 값 추가
-                        : (prevData.favorite[group] || []).filter((item) => item !== value), // 선택 해제된 값 제거
+                        ? [...(prevData.favorite[group] || []), value]
+                        : (prevData.favorite[group] || []).filter((item) => item !== value),
                 },
             }));
         } else if (type === "checkbox") {
-            // 일반 체크박스 처리
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: checked,
             }));
         } else {
-            // 일반 입력 필드 처리
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
@@ -61,7 +58,6 @@ function SignUpForm() {
         }
     };
 
-    // 닉네임 중복 확인 요청
     const checkNickname = async () => {
         if (!formData.nickname.trim()) {
             alert("닉네임을 입력해주세요.");
@@ -73,24 +69,39 @@ function SignUpForm() {
                 params: { nickname: formData.nickname },
             });
             setNicknameAvailable(response.data.available);
-            alert(response.data.available ? "사용 가능한 닉네임입니다." : "이미 사용 중인 닉네임입니다.");
+
+            if (response.data.available) {
+                alert("사용 가능한 닉네임입니다.");
+                setIsNicknameConfirmed(true); // 닉네임 확정
+            } else {
+                alert("이미 사용 중인 닉네임입니다.");
+            }
         } catch (error) {
             console.error("닉네임 중복 확인 중 오류 발생:", error);
             alert("닉네임 확인 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     };
 
-    // 회원가입 데이터 전송
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!formData.gender) {
+            alert("성별을 선택해주세요.");
+            return;
+        }
+
+        if (!isNicknameConfirmed) {
+            alert("닉네임 중복 확인을 완료해주세요.");
+            return;
+        }
+
         try {
             const token = localStorage.getItem("token");
-            const response = await axios.post("http://localhost:8090/api/signup", 
+            const response = await axios.post("http://localhost:8090/api/signup",
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // JWT를 Authorization 헤더에 추가
+                        Authorization: `Bearer ${token}`,
                     },
                 });
             if (response.data.success) {
@@ -147,9 +158,15 @@ function SignUpForm() {
                     value={formData.nickname}
                     onChange={handleChange}
                     placeholder="닉네임을 입력해주세요"
+                    disabled={isNicknameConfirmed}
                     required
                 />
-                <button type="button" className="check-button" onClick={checkNickname}>
+                <button
+                    type="button"
+                    className="check-button"
+                    onClick={checkNickname}
+                    disabled={isNicknameConfirmed}
+                >
                     중복확인
                 </button>
                 {nicknameAvailable !== null && (
@@ -278,6 +295,7 @@ function SignUpForm() {
                         name="gender"
                         value="M"
                         onChange={handleChange}
+                        required
                     />
                     남성
                 </label>
@@ -287,6 +305,7 @@ function SignUpForm() {
                         name="gender"
                         value="F"
                         onChange={handleChange}
+                        required
                     />
                     여성
                 </label>
