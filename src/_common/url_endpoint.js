@@ -1,5 +1,5 @@
 
-const domain = "http://localhost:8080"; // java-spring
+const domain = "http://localhost:8090"; // java-spring
 // const domain = "http://localhost:8000"; // python
 // const domain = "http://localhost:3000"; // node
 const frontApiPrefix = `${domain}/api/front`;
