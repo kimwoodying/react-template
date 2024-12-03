@@ -31,8 +31,6 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
     display: flex;
-    justify-content: center;
-    position: absolute;
   }
   
   .login-image {
