@@ -4,7 +4,9 @@ import "./SignUpForm.css";
 
 function SignUpForm() {
     const [formData, setFormData] = useState({
-        nicname: "",
+        name: "",
+        phone: "",
+        nickname: "",
         mbti: "",
         favorite: {
             activities: [],
@@ -12,7 +14,7 @@ function SignUpForm() {
             food: [],
             hobbies: [],
         },
-        birthdate: "",
+        dob: "",
         gender: "",
     });
 
@@ -24,7 +26,7 @@ function SignUpForm() {
     const handleChange = (e) => {
         const { name, value, type, checked, dataset } = e.target;
 
-        if (name === "birthdate") {
+        if (name === "dob") {
             // 날짜 유효성 검증
             if (value < minDate || value > maxDate) {
                 alert("올바른 날짜를 입력해주세요 (1950-01-01 ~ 2024-12-31)");
@@ -40,16 +42,18 @@ function SignUpForm() {
                 favorite: {
                     ...prevData.favorite,
                     [group]: checked
-                        ? [...prevData.favorite[group], value]
-                        : prevData.favorite[group].filter((item) => item !== value),
+                        ? [...(prevData.favorite[group] || []), value] // 선택된 값 추가
+                        : (prevData.favorite[group] || []).filter((item) => item !== value), // 선택 해제된 값 제거
                 },
             }));
         } else if (type === "checkbox") {
+            // 일반 체크박스 처리
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: checked,
             }));
         } else {
+            // 일반 입력 필드 처리
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
@@ -59,14 +63,14 @@ function SignUpForm() {
 
     // 닉네임 중복 확인 요청
     const checkNickname = async () => {
-        if (!formData.nicname.trim()) {
+        if (!formData.nickname.trim()) {
             alert("닉네임을 입력해주세요.");
             return;
         }
 
         try {
-            const response = await axios.get("http://127.0.0.1:5500/api/check-nickname", {
-                params: { nickname: formData.nicname },
+            const response = await axios.get("http://localhost:8090/api/check-nickname", {
+                params: { nickname: formData.nickname },
             });
             setNicknameAvailable(response.data.available);
             alert(response.data.available ? "사용 가능한 닉네임입니다." : "이미 사용 중인 닉네임입니다.");
@@ -81,7 +85,14 @@ function SignUpForm() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://127.0.0.1:5500/api/signup", formData);
+            const token = localStorage.getItem("token");
+            const response = await axios.post("http://localhost:8090/api/signup", 
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // JWT를 Authorization 헤더에 추가
+                    },
+                });
             if (response.data.success) {
                 alert("회원가입이 완료되었습니다!");
             } else {
@@ -97,14 +108,43 @@ function SignUpForm() {
         <form className="signup-form" onSubmit={handleSubmit}>
             <h1 className="signup-title">CoseCose 회원가입</h1>
 
-            {/* 닉네임 */}
+            {/* 이름 */}
             <div className="form-group">
-                <label htmlFor="nicname">닉네임</label>
+                <label htmlFor="name">이름</label>
                 <input
                     type="text"
-                    id="nicname"
-                    name="nicname"
-                    value={formData.nicname}
+                    id="name"
+                    name="name"
+                    value={formData.name || ""}
+                    onChange={handleChange}
+                    placeholder="이름을 입력해주세요"
+                    required
+                />
+            </div>
+
+            {/* 전화번호 */}
+            <div className="form-group">
+                <label htmlFor="tel">전화번호</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone || ""}
+                    onChange={handleChange}
+                    placeholder="010-1234-1234"
+                    pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                    required
+                />
+            </div>
+
+            {/* 닉네임 */}
+            <div className="form-group">
+                <label htmlFor="nickname">닉네임</label>
+                <input
+                    type="text"
+                    id="nickname"
+                    name="nickname"
+                    value={formData.nickname}
                     onChange={handleChange}
                     placeholder="닉네임을 입력해주세요"
                     required
@@ -216,12 +256,12 @@ function SignUpForm() {
 
             {/* 생년월일 */}
             <div className="form-group">
-                <label htmlFor="birthdate">생년월일</label>
+                <label htmlFor="dob">생년월일</label>
                 <input
                     type="date"
-                    id="birthdate"
-                    name="birthdate"
-                    value={formData.birthdate}
+                    id="dob"
+                    name="dob"
+                    value={formData.dob}
                     onChange={handleChange}
                     min={minDate}
                     max={maxDate}
@@ -236,7 +276,7 @@ function SignUpForm() {
                     <input
                         type="radio"
                         name="gender"
-                        value="남성"
+                        value="M"
                         onChange={handleChange}
                     />
                     남성
@@ -245,7 +285,7 @@ function SignUpForm() {
                     <input
                         type="radio"
                         name="gender"
-                        value="여성"
+                        value="F"
                         onChange={handleChange}
                     />
                     여성
