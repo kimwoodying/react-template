@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "./SignUpForm.css";
 
-function SignUpForm() {
+function SignUpForm({setIsLoggedIn}) {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
@@ -106,6 +108,8 @@ function SignUpForm() {
                 });
             if (response.data.success) {
                 alert("회원가입이 완료되었습니다!");
+                setIsLoggedIn(true);
+                navigate('/');
             } else {
                 alert("회원가입 실패: " + response.data.message);
             }

@@ -19,10 +19,9 @@ function App() {
             <Routes>
                 {/* 로그인 여부에 따라 화면 변경 */}
                 <Route path="/" element={ isLoggedIn ? <MainPage /> : <LoginForm setIsLoggedIn={setIsLoggedIn} />}/>
-                <Route path="/signup" element={<SignUpForm />} />
+                <Route path="/signup" element={<SignUpForm setIsLoggedIn={setIsLoggedIn}/>} />
                 {/* 보호된 라우트: 로그인하지 않은 사용자는 로그인 화면으로 리다이렉트 */}
-                <Route path="/mainForm" element={isLoggedIn ? <MainPage /> : <Navigate to="/" />}/>
-                <Route path="/callback/KakaoCallback" element={<KakaoCallback setIsLoggedIn={setIsLoggedIn}/>} />
+                <Route path="/callback/KakaoCallback" element={<KakaoCallback setIsLoggedIn={setIsLoggedIn} />} />
             </Routes>
         </Router>
     );
