@@ -39,7 +39,8 @@ function KakaoCallback({setIsLoggedIn}) {
                             if (needInfo) {
                                 navigate('/signup'); // 추가 정보가 필요하면 회원가입 페이지로 이동
                             } else {
-                                navigate('/mainForm'); // 추가 정보가 필요 없으면 메인 페이지로 이동
+                                setIsLoggedIn(true);
+                                navigate('/'); // 추가 정보가 필요 없으면 메인 페이지로 이동
                             }
                         } catch (error) {
                             console.error('콜백 처리 중 오류 발생:', error);
