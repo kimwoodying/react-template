@@ -23,7 +23,7 @@ function LoginForm(setIsLoggedIn) {
     };
     
     return (
-        <div>
+        <div className='login_From'>
             {/* Title */}
             <div className="title">CoseCose</div>
 
@@ -49,9 +49,9 @@ function LoginForm(setIsLoggedIn) {
             </div>
 
             {/* Footer */}
-            <footer>
+            <div className='footer'>
                 <a href="/customer-support">고객센터</a> | <a href="/inquiry">문의하기</a>
-            </footer>
+            </div>
         </div>
     );
 }

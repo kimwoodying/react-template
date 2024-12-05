@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './MainForm.css'; // CSS 파일 연결
 
 function MainPage() {
     const navigate = useNavigate();
@@ -22,7 +23,19 @@ function MainPage() {
     }, [navigate]);
 
     return (
-        <div>
+        <div className='place_list_div'>
+            <div className='header_cosecose'>
+                <h1 className='main_title'>CoseCose</h1>
+            </div>
+            <div className='event_div'>
+                <h1>이달의 축제</h1>
+                <div className='event_pic_div'>
+                    <img className='event_pic' src='/images/event_img/event1.png'></img>
+                </div>
+            </div>
+            <div className='content_div'>
+
+            </div>
             <h1>메인 페이지</h1>
             <p>환영합니다! 로그인 성공!</p>
         </div>
