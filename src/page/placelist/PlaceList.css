@@ -1,0 +1,177 @@
+/* 전체 스타일 포함 */
+.placelist-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+.placelist-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff7fa7;
+    margin-bottom: 20px;
+}
+
+.placelist-search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+}
+
+.placelist-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.placelist-search-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.placelist-filters-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+
+.placelist-filters {
+    display: flex;
+    gap: 10px;
+}
+
+.placelist-filter-button {
+    padding: 10px 20px;
+    border: 1px solid #ff7fa7;
+    border-radius:25px;
+    background-color: transparent;
+    color: #ff7fa7;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.placelist-filter-active {
+    background-color: #ff7fa7;
+    color: #fff;
+}
+
+.placelist-sort-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+}
+
+.placelist-sort-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.placelist-sort-label input[type="radio"] {
+    margin-right: 5px;
+}
+
+.placelist-places {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.placelist-place-card {
+    background-color: #f3eafb;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.placelist-place-image-container {
+    position: relative;
+}
+
+.placelist-place-image {
+    width: 100%;
+    height: auto;
+}
+
+/* 좋아요 버튼 스타일 */
+.placelist-like-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #282c34;
+    transition: color 0.2s ease-in-out;
+}
+
+.placelist-like-button.liked {
+    color: #282c34;
+}
+
+.placelist-like-button:hover {
+    color: #282c34;
+}
+
+.placelist-place-details {
+    padding: 15px;
+}
+
+.placelist-place-name {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.placelist-place-address {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.placelist-place-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.placelist-place-tag {
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.placelist-loading {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+.placelist-no-results {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    margin-top: 20px;
+}
+

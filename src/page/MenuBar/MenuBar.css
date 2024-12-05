@@ -1,0 +1,16 @@
+.menu-link {
+    display: flex; /* 플렉스박스 사용 */
+    align-items: center; /* 텍스트와 이미지 수직 정렬 */
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.menu-link img {
+    width: 20px; /* 이미지 크기 */
+    height: 20px;
+    margin-left: 8px; /* 텍스트와 이미지 간격 */
+}

@@ -30,21 +30,21 @@ function LoginForm(setIsLoggedIn) {
             {/* Kakao Login */}
             <div className="button kakao-login" onClick={() => handleSocialLogin('kakao')}>
                 <a href={kakaoLoginURL}>
-                    <img src="/images/kakao.png" alt="카카오 로그인" width="300" />
+                    <img src="/images/login_img/kakao.png" alt="카카오 로그인" width="300" />
                 </a>
             </div>
 
             {/* Naver Login */}
             <div className="button naver-login" onClick={() => handleSocialLogin('naver')}>
                 <a href="naver/login">
-                    <img src="/images/naver.png" alt="네이버 로그인" width="300" />
+                    <img src="/images/login_img/naver.png" alt="네이버 로그인" width="300" />
                 </a>
             </div>
 
             {/* Google Login */}
             <div className="button google-login" onClick={() => handleSocialLogin('google')}>
                 <a href="google/login">
-                    <img src="/images/google.png" alt="구글 로그인" width="300" />
+                    <img src="/images/login_img/google.png" alt="구글 로그인" width="300" />
                 </a>
             </div>
 
