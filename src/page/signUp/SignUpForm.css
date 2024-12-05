@@ -1,24 +1,13 @@
-/* 전체 페이지 배경 설정 */
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0; /* 회색 배경 */
-    font-family: Arial, sans-serif;
-    height: 100vh; /* 화면 높이를 꽉 채움 */
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-}
-
 /* 회원가입 폼 스타일 */
 .signup-form {
     width: 100%; /* 너비를 화면 전체로 설정 */
     max-width: 100%; /* 최대 너비 제한 없음 */
     margin: 0; /* 상하좌우 여백 제거 */
-    padding: 20px;
-    border: 1px solid #ddd;
+    padding: 0;
+    padding-left: 1%;
+    border: 0px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9; /* 카드 배경 유지 */
+    background-color: white; /* 카드 배경 유지 f9f9f9*/
     font-family: Arial, sans-serif;
     box-shadow: none; /* 그림자 제거 */
     box-sizing: border-box; /* 박스 크기 포함 */
@@ -49,6 +38,7 @@ body, html {
 }
 
 .form-options {
+    width: 90%;
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 */
     gap: 10px;
