@@ -4,6 +4,7 @@
     html{
       background-color: gray;
       height: 90%;
+      overflow-y: auto;
     }
     body {
       margin: 0;
@@ -37,6 +38,7 @@
         justify-content: flex-start; /* 위쪽부터 시작 */
         align-items: flex-start; /* 위쪽으로 붙이기 */
         background-color: #f9f9f9; /* 모바일에서는 밝은 배경 */
+        overflow-y: auto;
       }
 
       #root {
@@ -45,6 +47,8 @@
         max-width: none; /* 너비 제한 해제 */
         border-radius: 0; /* 모서리를 둥글게 하지 않음 */
         box-shadow: none; /* 그림자 제거 */
+        overflow-y: auto;
+        overflow-x: hidden;
       }
     }
   </style>

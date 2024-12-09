@@ -4,6 +4,9 @@ import SignUpForm from './page/signUp/SignUpForm';
 import LoginForm from './page/login/LoginFrom';
 import MainPage from './page/main/MainForm';
 import KakaoCallback from './page/callback/KakaoCallback';
+import Layout from './_common/Layout';
+import Category from './page/category/category';
+import PlaceList from './page/placelist/PlaceList';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,10 +21,15 @@ function App() {
         <Router>
             <Routes>
                 {/* 로그인 여부에 따라 화면 변경 */}
-                <Route path="/" element={ isLoggedIn ? <MainPage /> : <LoginForm setIsLoggedIn={setIsLoggedIn} />}/>
+                
                 <Route path="/signup" element={<SignUpForm setIsLoggedIn={setIsLoggedIn}/>} />
                 {/* 보호된 라우트: 로그인하지 않은 사용자는 로그인 화면으로 리다이렉트 */}
                 <Route path="/callback/KakaoCallback" element={<KakaoCallback setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path='/category' element={ <Category/>} />
+                    <Route path='/placelist' element={<PlaceList/>}/>
+                </Route>
             </Routes>
         </Router>
     );
