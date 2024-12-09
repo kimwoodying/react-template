@@ -10,66 +10,19 @@ const PlaceList = () => {
     const [sortOption, setSortOption] = useState("인기순");
     const [likedPlaces, setLikedPlaces] = useState({});
     const navigate = useNavigate();
+    const [error, setError] = useState(null); // 에러 상태
 
     useEffect(() => {
         const fetchPlaces = async () => {
             try {
-                const data = [
-                    {
-                        id: 1,
-                        name: "무라텐",
-                        address: "유성구 반석동",
-                        tags: ["#식당", "#일식", "#텐동", "#반석동"],
-                        rating: 4.3,
-                        price: 15000,
-                        popularity: 500,
-                        image: "https://via.placeholder.com/363x140.png?text=Place+1",
-                    },
-                    {
-                        id: 2,
-                        name: "연선홈베이커리",
-                        address: "유성구 지족동",
-                        tags: ["#카페", "#빵", "#베이커리", "#지족동"],
-                        rating: 4.7,
-                        price: 10000,
-                        popularity: 1000,
-                        image: "https://via.placeholder.com/363x140.png?text=Place+2",
-                    },
-                    {
-                        id: 3,
-                        name: "글램핑 존",
-                        address: "유성구 문지동",
-                        tags: ["#글램핑", "#캠핑", "#힐링", "#문지동"],
-                        rating: 4.0,
-                        price: 20000,
-                        popularity: 300,
-                        image: "https://via.placeholder.com/363x140.png?text=Place+3",
-                    },
-                    {
-                        id: 4,
-                        name: "연선홈베이커리",
-                        address: "유성구 지족동",
-                        tags: ["#카페", "#빵", "#베이커리", "#지족동"],
-                        rating: 4.7,
-                        price: 10000,
-                        popularity: 1000,
-                        image: "https://via.placeholder.com/363x140.png?text=Place+2",
-                    },
-                    {
-                        id: 5,
-                        name: "연선홈베이커리",
-                        address: "유성구 지족동",
-                        tags: ["#카페", "#빵", "#베이커리", "#지족동"],
-                        rating: 4.7,
-                        price: 10000,
-                        popularity: 1000,
-                        image: "https://via.placeholder.com/363x140.png?text=Place+2",
-                    },
-                ];
-                setPlaces(data);
-                setFilteredPlaces(data);
+                const response = await fetch('http://192.168.219.103:8090/api/get_datespot'); // 서버 API 호출
+                const result = await response.json(); // JSON 데이터 파싱
+                setPlaces(result); // 데이터를 상태에 저장
+                setFilteredPlaces(result);
+                console.log(result);
             } catch (error) {
                 console.error("Error fetching places:", error);
+                setError(error.message);
             }
         };
 
@@ -80,8 +33,8 @@ const PlaceList = () => {
         let filtered = places.filter((place) => {
             const matchesSearch =
                 searchQuery === "" ||
-                place.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                place.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                place.spotName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                place.locate.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 place.tags.some((tag) =>
                     tag.toLowerCase().includes(searchQuery.toLowerCase())
                 );
@@ -117,8 +70,6 @@ const PlaceList = () => {
 
     return (
         <div className="placelist-container">
-            <header className="placelist-header">CoseCose</header>
-
             <div className="placelist-search-bar">
                 <input
                     type="text"
@@ -166,36 +117,39 @@ const PlaceList = () => {
             <div className="placelist-places">
                 {filteredPlaces.map((place) => (
                     <div
-                        key={place.id}
+                        key={place.dateSpotIdx}
                         className="placelist-place-card"
-                        onClick={() => handleCardClick(place.id)}
+                        onClick={() => handleCardClick(place.dateSpotIdx)}
                     >
                         <div className="placelist-place-image-container">
                             <img
-                                src={place.image}
-                                alt={place.name}
+                                src={place.imageURL}
+                                alt={place.spotName}
                                 className="placelist-place-image"
+                                onError={(e) => {
+                                    e.target.src = '/images/non_image.png'; // 이미지 로드 실패 시 대체 이미지
+                                }}
                             />
                             <button
                                 className={`placelist-like-button ${
-                                    likedPlaces[place.id] ? "liked" : ""
+                                    likedPlaces[place.dateSpotIdx] ? "liked" : ""
                                 }`}
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    toggleLike(place.id, event);
+                                    toggleLike(place.dateSpotIdx, event);
                                 }}
                             >
-                                {likedPlaces[place.id] ? "❤️" : "♡"}
+                                {likedPlaces[place.dateSpotIdx] ? "❤️" : "♡"}
                             </button>
                         </div>
                         <div className="placelist-place-details">
-                            <h3 className="placelist-place-name">{place.name}</h3>
-                            <p className="placelist-place-address">{place.address}</p>
+                            <h3 className="placelist-place-name">{place.spotName}</h3>
+                            <p className="placelist-place-address">{place.locate}</p>
                             <div className="placelist-place-tags">
                                 {place.tags.map((tag, index) => (
                                     <span key={index} className="placelist-place-tag">
-                    {tag}
-                  </span>
+                                        #{tag}
+                                    </span>
                                 ))}
                             </div>
                         </div>

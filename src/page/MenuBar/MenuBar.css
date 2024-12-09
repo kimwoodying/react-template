@@ -10,7 +10,7 @@
 }
 
 .menu-link img {
-    width: 20px; /* 이미지 크기 */
-    height: 20px;
+    width: 30px; /* 이미지 크기 */
+    height: 30px;
     margin-left: 8px; /* 텍스트와 이미지 간격 */
 }

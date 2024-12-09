@@ -2,33 +2,25 @@
     display: flex;
     flex-direction: column; /* 위에서 아래로 정렬 */
     align-items: center;    /* 가로로 중앙 정렬 */
-    gap: 20px;              /* 요소 간 간격 */
+    gap: 10px;              /* 요소 간 간격 */
     width: 100%;
     height: 100%;
-}
-.header_cosecose{
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.main_title{
-    display: flex;
-    justify-content: center;
-    color: #f7a7a8;
-    margin-top: 10;
-    margin-bottom: 0;
+    
+    
+    overflow: visible;
+    overflow-y: auto;  /* 수직 스크롤 활성화 */
 }
 
 .event_title{
     margin: 0;
 }
-.event_div{
 
+.event_div{
+  width: 100%;
 }
 
 .event_pic_div{
-    width: 400px;
+    width: 100%;
     height: 286px;
 }
 
@@ -39,13 +31,13 @@
 /* content_div_popup 크기 조정 */
 .content_div_popup {
     width: 100%;
+    height: auto;
     max-width: 100%;
+    max-height: auto;
     margin: 0 auto;
     padding: 5px;
-    overflow: hidden;
     box-sizing: border-box;
   }
-
 
 /* 부모 컨테이너 */
 .content_dive_plcae {
@@ -59,7 +51,7 @@
   }
   
   /* 카드 스타일 */
-  .placelist-place-card {
+  .placelist-place-card-main {
     flex: 0 0 auto; /* 카드 크기를 고정하고, 자동으로 옆으로 나열 */
     width: 250px; /* 카드의 너비 */
     border: 1px solid #ccc;
@@ -131,4 +123,5 @@
   
   .content_div_title{
     margin: 0;
+    color: #f7a7a8;
   }
